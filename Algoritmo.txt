@@ -1,0 +1,102 @@
+Definir Cliente:
+    Atributos:
+        Documento: Entero
+        Nombre: Cadena
+        Saldo: Real
+        Activo: Booleano
+
+Definir Tienda:
+    Atributos:
+        Clientes: Lista de Cliente
+
+    Función BuscarCliente(Documento: Entero) -> Entero:
+        Para i desde 0 hasta longitud(Clientes) - 1:
+            Si Clientes[i].Documento es igual a Documento:
+                Retornar i
+        Retornar -1  // Si no se encuentra
+
+    Función Consultar(Documento: Entero):
+        índice = BuscarCliente(Documento)
+        Si índice es diferente de -1:
+            Imprimir "Cliente encontrado:"
+            Imprimir "Nombre: " + Clientes[índice].Nombre
+            Imprimir "Documento: " + Clientes[índice].Documento
+            Imprimir "Saldo: " + Clientes[índice].Saldo
+        Sino:
+            Imprimir "Cliente no encontrado"
+
+    Función Ordenar():
+        Ordenar Clientes por Documento en orden ascendente
+        Imprimir "Clientes ordenados por documento"
+        MostrarClientes()  // Mostrar el estado actual de los clientes
+
+    Función Eliminar(Documento: Entero):
+        índice = BuscarCliente(Documento)
+        Si índice es diferente de -1:
+            Eliminar Cliente en la posición índice de Clientes
+            Imprimir "Cliente eliminado"
+            MostrarClientes()  // Mostrar el estado actual de los clientes
+        Sino:
+            Imprimir "Cliente no encontrado para eliminar"
+
+    Función Ingresar(Documento: Entero, Nombre: Cadena, Saldo: Real):
+        Si BuscarCliente(Documento) es diferente de -1:
+            Imprimir "Error: El documento ya está registrado."
+        Sino:
+            Crear NuevoCliente con Documento, Nombre, Saldo, Activo = Verdadero
+            Agregar NuevoCliente a la lista Clientes
+            Ordenar()  // Ordenar automáticamente después de ingresar
+            Imprimir "Nuevo cliente ingresado"
+    
+    Función MostrarClientes():
+        Si Clientes está vacía:
+            Imprimir "No hay clientes registrados"
+        Sino:
+            Para cada Cliente en Clientes:
+                Imprimir "Documento: " + Cliente.Documento
+                Imprimir "Nombre: " + Cliente.Nombre
+                Imprimir "Saldo: " + Cliente.Saldo
+
+    Función MostrarMenu():
+        Imprimir "--- Menú de Opciones ---"
+        Imprimir "1. Consultar"
+        Imprimir "2. Ordenar"
+        Imprimir "3. Eliminar"
+        Imprimir "4. Ingresar"
+        Imprimir "9. Terminar"
+
+Algoritmo Principal:
+    Crear Tienda como instancia de Tienda
+    Mientras Verdadero:
+        MostrarMenu()
+        Imprimir "Seleccione una opción: "
+        Leer Opción
+
+        Si Opción es 1:
+            Imprimir "Ingrese el número de documento a consultar: "
+            Leer Documento
+            Tienda.Consultar(Documento)
+        
+        Sino Si Opción es 2:
+            Tienda.Ordenar()
+
+        Sino Si Opción es 3:
+            Imprimir "Ingrese el número de documento a eliminar: "
+            Leer Documento
+            Tienda.Eliminar(Documento)
+
+        Sino Si Opción es 4:
+            Imprimir "Ingrese el número de documento: "
+            Leer Documento
+            Imprimir "Ingrese el nombre del cliente: "
+            Leer Nombre
+            Imprimir "Ingrese el saldo: "
+            Leer Saldo
+            Tienda.Ingresar(Documento, Nombre, Saldo)
+
+        Sino Si Opción es 9:
+            Tienda.Terminar()
+            Salir
+
+        Sino:
+            Imprimir "Opción inválida, por favor intente nuevamente."
